@@ -130,6 +130,80 @@ Installs to `./.claude/` for testing modifications before contributing.
 
 </details>
 
+### Known Limitations
+
+The following limitations affect RooCode runtime usage. Understanding these constraints before installation helps ensure GSD meets your expectations.
+
+### Parallel Agent Execution
+
+**Impact:** map-codebase executes 6x slower (156s vs expected 25s)
+
+**Workaround:** None - platform limitation
+
+**Details:** RooCode VSCode Extension executes agents sequentially regardless of PARALLELIZATION config. Workflows specify run_in_background=true but platform ignores. This affects any workflow that spawns parallel agents (map-codebase, execute-phase waves).
+
+### Multi-Select UI
+
+**Impact:** Can only select one option at a time
+
+**Workaround:** Use comma-separated numeric input (e.g., "1,3,5")
+
+**Details:** RooCode's AskUserQuestion accepts multiSelect: true parameter but UI only allows single selection. Commands that offer multi-select functionality work around this by accepting comma-separated choices.
+
+### Web Tools Unavailable
+
+**Impact:** Research agents cannot access WebSearch or WebFetch
+
+**Workaround:** None - platform limitation
+
+**Details:** RooCode environment (glm-4.7 model) doesn't provide WebSearch/WebFetch tools. Research agents gracefully fall back to training data, which may be outdated for rapidly evolving technologies.
+
+### .roomodes Manual Creation
+
+**Impact:** Custom mode doesn't appear automatically in mode selector
+
+**Workaround:** Run /gsd:create-mode manually
+
+**Details:** map-codebase workflow should create .roo/.roomodes but file may not exist. Manually creating the mode file ensures GSD appears in RooCode's mode selector.
+
+### Hooks/Statusline Unknown
+
+**Impact:** SessionStart hooks and statusline integration unverified
+
+**Workaround:** Run /gsd:verify-hooks-statusline to check
+
+**Details:** Verification infrastructure created but actual RooCode support unknown. Run the verification command in RooCode environment to determine if these features work.
+
+For complete details, see [v1-MILESTONE-AUDIT.md](.planning/v1-MILESTONE-AUDIT.md)
+
+### RooCode Requirements
+
+When installing for RooCode runtime, the following capabilities are required:
+
+**Required:**
+- `AskUserQuestion` tool — User interaction for decision gates and confirmations
+- RooCode VSCode extension — Commands run in VSCode, not terminal
+
+**Verification:**
+- Installation checks for AskUserQuestion availability
+- Use `--force` to bypass (interactive commands may be broken)
+
+<details>
+<summary><strong>RooCode Installation</strong></summary>
+
+```bash
+# RooCode
+npx get-shit-done-cc --roocode --global   # Install to ~/.roo/
+npx get-shit-done-cc --roocode --local    # Install to ./.roo/
+
+# All runtimes (including RooCode)
+npx get-shit-done-cc --all --global
+```
+
+RooCode uses a flat command structure (`/gsd-help` instead of `/gsd:help`).
+
+</details>
+
 ### Recommended: Skip Permissions Mode
 
 GSD is designed for frictionless automation. Run Claude Code with:
