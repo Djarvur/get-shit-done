@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **RooCode runtime support** — Full port of GSD from Claude Code CLI to RooCode VSCode Extension with feature-complete parity. Includes 32 GSD commands, 7 specialized agents, flat command structure (`/gsd-help`), and RooCode-specific frontmatter conversion
+- **RooCode installer** — `--roocode` flag for installing GSD to RooCode's `.roo/` directory with automatic frontmatter conversion (commands → description only, agents → name/description/allowed-tools/color), conflict detection for flattened command names, and validation of converted files
+- **RooCode validation** — Pre-installation validation of AskUserQuestion support and frontmatter structure with `--force` bypass flag for environments where validation cannot be performed
+- **Known limitations documentation** — README.md now documents RooCode platform constraints (parallel agent execution, multi-select UI, web tools availability, .roomodes creation, hooks/statusline support) with workarounds and impact analysis
+- **FORK.md** — Comprehensive guide for installing GSD from a forked repository, with 4 installation methods (local dev, GitHub URL, RooCode runtime, dev mode), verification steps for Claude Code CLI and RooCode VSCode Extension, troubleshooting common issues, and update procedures
+
 ## [1.18.0] - 2026-02-08
 
 ### Added
